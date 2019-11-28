@@ -1,8 +1,6 @@
 import csv
 import os
 
-class TruckVolumeException(BaseException):
-    pass
 
 class CarBase:
     def __init__(self, brand, photo_file_name, carrying):
@@ -21,14 +19,14 @@ class CarBase:
 
 class Car(CarBase):
     def __init__(self, car_type, brand, photo_file_name, carrying, passenger_seats_count):
-        CarBase.__init__(self,brand,photo_file_name, carrying)
+        CarBase.__init__(self, brand, photo_file_name, carrying)
         self.passenger_seats_count = passenger_seats_count
         self.car_type = car_type
 
 
 class Truck(CarBase):
     def __init__(self, car_type, brand, photo_file_name, carrying, body_whl=""):
-        CarBase.__init__(self,brand,photo_file_name, carrying)
+        CarBase.__init__(self, brand, photo_file_name, carrying)
         self._body_whl = body_whl
         self.car_type = car_type
         self.body_height = 0
@@ -49,13 +47,12 @@ class Truck(CarBase):
         return self.body_width * self.body_length * self.body_height
 
 
-
-
 class SpecMachine(CarBase):
     def __init__(self, car_type, brand, photo_file_name, carrying, extra):
-        CarBase.__init__(self,brand,photo_file_name, carrying)
+        CarBase.__init__(self, brand, photo_file_name, carrying)
         self.extra = extra
         self.car_type = car_type
+
 
 def validate_row(row):
     if len(row) < 7:
@@ -76,14 +73,13 @@ def create_car(row):
     carrying = float(row[5])
     if car_type == "spec_machine":
         extra = row[6]
-        return SpecMachine(car_type,brand,photo,carrying,extra)
+        return SpecMachine(car_type, brand, photo, carrying, extra)
     if car_type == "car":
         passenger_seat_cout = int(row[2])
-        return Car(car_type,brand,photo,carrying,passenger_seat_cout)
+        return Car(car_type, brand, photo, carrying, passenger_seat_cout)
     if car_type == "truck":
         body_whl = row[4]
-        return Truck(car_type,brand,photo,carrying,body_whl)
-
+        return Truck(car_type, brand, photo, carrying, body_whl)
 
 
 def get_car_list(csv_filename):
@@ -97,14 +93,3 @@ def get_car_list(csv_filename):
             else:
                 continue
     return car_list
-
-
-# lastochka = Truck("truck","Renault", 'picture.png',2500, '2x3x4')
-#
-# print(lastochka.get_body_volume())
-# print(lastochka.get_photo_file_ext())
-# l = get_car_list('cars.csv')
-# print(l[0].passenger_seats_cout)
-
-
-
